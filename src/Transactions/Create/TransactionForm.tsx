@@ -5,6 +5,8 @@ import React, { FormEvent, Fragment, useEffect, useState } from 'react'
 import { PrimaryButton } from '../../components/buttons/PrimaryButton'
 import { Categories } from '../../models/Category'
 import type { TransactionForm as TransactionFormType } from '../../models/Transaction'
+import { Dishes } from '../../models/Transaction'
+import { FoodOrderFields } from './FoodOrderFields'
 
 export const getRoundedMinutes = (date: Date): string => {
   const minutes = date.getMinutes()
@@ -14,12 +16,13 @@ export const getRoundedMinutes = (date: Date): string => {
 
 type onFormChange<T extends {}> = <K extends keyof T, V extends T[K]>(name: K, value: V) => void
 
-const DEFAULT_FORM_STATE: TransactionFormType = {
+const DEFAULT_FORM_STATE = {
   description: '',
   date: new Date().toLocaleDateString('en-CA').toString(),
   time: `${new Date().getHours().toString().padStart(2, '0')}:${getRoundedMinutes(new Date())}`,
   amount: 0,
   category: 'Food Delivery',
+  foodOrder: { restaurant: '', dishes: [] as Dishes },
 } as const
 
 export function TransactionForm() {
@@ -28,6 +31,7 @@ export function TransactionForm() {
 
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
+    console.log(form)
   }
 
   const onFormChange: onFormChange<TransactionFormType> = (key, value) => {
@@ -35,8 +39,9 @@ export function TransactionForm() {
   }
 
   useEffect(() => {
-    setSubmitButtonName('Next')
-  }, [form.category === 'Food Delivery'])
+    if (form.category === 'Food Delivery') setSubmitButtonName('Next')
+    else setSubmitButtonName('Save')
+  }, [form.category])
 
   return (
     <form className="mb-0 text-sm" onSubmit={(event) => onSubmit(event)}>
@@ -149,6 +154,13 @@ export function TransactionForm() {
             </div>
           </label>
         </div>
+
+        {form.category === 'Food Delivery' ? (
+          <FoodOrderFields
+            foodOrder={form.foodOrder!}
+            setFoodOrder={(fof) => setForm({ ...form, foodOrder: { ...fof } })}
+          />
+        ) : undefined}
 
         <div className="mt-4 flex justify-center gap-6">
           <button
