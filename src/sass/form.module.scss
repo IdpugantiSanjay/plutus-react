@@ -1,0 +1,26 @@
+.form {
+  box-shadow: var(--shadow-2);
+  border-radius: var(--radius-2);
+  background: white;
+
+
+  fieldset > div:not(:last-child) {
+    margin-bottom: 10px;
+  }
+
+  fieldset {
+    margin: 10px;
+    border: none;
+  }
+
+  & input {
+    width: 100%;
+  }
+
+  .actions {
+    display: flex;
+    justify-content: center;
+  }
+}
+
+

@@ -1,0 +1,17 @@
+
+
+.deleteButton {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  cursor: pointer;
+  border-radius: 9999px;
+  background-color: rgb(236 72 153 / 0.2);
+  z-index: 1;
+
+  &:hover {
+    border-width: 2px;
+    border-color: rgb(236 72 153 / 1);
+  }
+
+}

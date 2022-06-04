@@ -1,0 +1,13 @@
+.container {
+  margin: 50px auto auto;
+
+  & > div {
+    margin-bottom: 50px;
+  }
+
+  & > div:first-child {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
